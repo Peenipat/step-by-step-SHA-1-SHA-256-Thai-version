@@ -1,7 +1,8 @@
 def left_rotate(n, b):
     return ((n << b) | (n >> (32 - b))) & 0xffffffff
 
-def pad_message(message):
+#ฟังก์ชั่นการเตรียมข้อความให้มีขนาด 512-bit
+def pad_message(message): 
     count = 0
     message = bytearray(message, 'utf-8')
     byte = len(message) * 8
@@ -13,6 +14,7 @@ def pad_message(message):
     return message
 
 def SHA1(message) :
+    #ค่าเริ่มต้น
     h0 = 0x67452301
     h1 = 0xEFCDAB89
     h2 = 0x98BADCFE
@@ -27,8 +29,6 @@ def SHA1(message) :
             
         for j in range(16,80):
             words[j] = left_rotate(words[j-3] ^ words[j - 8] ^ words[j -14] ^ words[j - 16],1)
-            
-    
         A = h0
         B = h1
         C = h2
@@ -38,7 +38,7 @@ def SHA1(message) :
         for j in range(80):
             if j < 20:
                 F = (B & C) ^ ((~B) & D)
-                K = 0x5A827999
+                K = 0x5A827999 #ค่าคงที่ในแต่ละรอบ
             elif  j < 40:
                 F = (B ^ C )^ D
                 K = 0x6ED9EBA1
